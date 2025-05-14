@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crypto Liquidity Predictor</title>
+</head>
+<body>
+    <h2>🪙 Crypto Liquidity Prediction</h2>
+    <form method="POST" action="/predict">
+        <label>Price:</label><br>
+        <input type="text" name="price"><br><br>
+
+        <label>1h Change (%):</label><br>
+        <input type="text" name="1h"><br><br>
+
+        <label>24h Change (%):</label><br>
+        <input type="text" name="24h"><br><br>
+
+        <label>7d Change (%):</label><br>
+        <input type="text" name="7d"><br><br>
+
+        <label>24h Volume:</label><br>
+        <input type="text" name="24h_volume"><br><br>
+
+        <label>Market Cap:</label><br>
+        <input type="text" name="mkt_cap"><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction_text %}
+        <h3>{{ prediction_text }}</h3>
+    {% endif %}
+</body>
+</html>
