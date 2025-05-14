@@ -13,21 +13,27 @@ def home():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Extract form values in order
+        # Helper function to safely parse input
+        def parse_input(value):
+            value = value.strip().replace(',', '')  # Remove commas
+            return float(value)
+
         features = [
-            float(request.form['price']),
-            float(request.form['1h']),
-            float(request.form['24h']),
-            float(request.form['7d']),
-            float(request.form['24h_volume']),
-            float(request.form['mkt_cap'])
-        ]
+    parse_input(request.form['price']),
+    parse_input(request.form['24h']),
+    parse_input(request.form['24h_volume']),
+    parse_input(request.form['mkt_cap'])
+]
+
 
         prediction = model.predict([features])[0]
         return render_template('index.html', prediction_text=f"📈 Predicted Liquidity: {prediction:.2f}")
 
+    except ValueError:
+        return render_template('index.html', prediction_text="⚠️ Please enter valid numeric values for all fields.")
     except Exception as e:
         return render_template('index.html', prediction_text=f"⚠️ Error: {str(e)}")
 
